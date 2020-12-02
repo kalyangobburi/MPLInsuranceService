@@ -142,10 +142,10 @@ namespace MPLInsuranceService.Controllers
                 CoveragePlan cPlan = null;
                 if (!string.IsNullOrEmpty(customer.CustomerCountry))
                 {
-                    if ((customer.CustomerCountry.ToLower() == "usa") || (customer.CustomerCountry.ToLower() == "can"))
-                        cPlan = _coverageDataRepository.GetAll().Where(cp => (cp.EligibilityCountry == customer.CustomerCountry) && (customer.SaleDate >= cp.EligibilityDateFrom) && (customer.SaleDate <= cp.EligibilityDateTo)).FirstOrDefault();
-                    else
+                    if (customer.CustomerCountry.ToLower() == "other")
                         cPlan = _coverageDataRepository.GetAll().Where(cp => (cp.EligibilityCountry.ToLower() == "other") && (customer.SaleDate >= cp.EligibilityDateFrom) && (customer.SaleDate <= cp.EligibilityDateTo)).FirstOrDefault();
+                    else
+                        cPlan = _coverageDataRepository.GetAll().Where(cp => (cp.EligibilityCountry == customer.CustomerCountry) && (customer.SaleDate >= cp.EligibilityDateFrom) && (customer.SaleDate <= cp.EligibilityDateTo)).FirstOrDefault();
                 }
                 if (cPlan != null)
                 {
